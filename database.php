@@ -22,6 +22,8 @@ function connectToDatabase() //connecting to database
     }
     return $connection;
 }
+
+//doesnt work
 function checkEmailAvailability($email, $database) //checking if email is unique
 {
     $sql = $database->prepare("SELECT * FROM users WHERE email = ?");
@@ -34,6 +36,8 @@ function checkEmailAvailability($email, $database) //checking if email is unique
         return true;
     }
 }
+
+//doesnt work
 function checkUsernameAvailability($username, $database) // checking if username is unique
 {
     $sql = $database->prepare("SELECT * FROM users WHERE username = ?");

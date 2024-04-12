@@ -28,14 +28,26 @@ form{
     display: flex;
     flex-direction: column;
 }
+.form-container{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    padding: 30px;
+    border-radius: 5px;
+}
+
 input{
     font-family: "Montserrat", sans-serif;
     border-radius: 5px;
     padding: 5px 10px;
     border: 1px solid black;
+    font-weight: 500;
 }
+input:focus{
+    outline: none;
+}
+
 #switch-page{
     margin-top: 5px;
+    font-weight: 500;
 }
 #submit-button{
     border: none;
@@ -49,4 +61,8 @@ input{
 }
 #submit-button:hover{
     opacity: 0.8;
+}
+label{
+    margin-block: 5px;
+    font-weight: bold;
 }
