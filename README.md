@@ -1,2 +1,2 @@
-# Login-registration-form (in progress)
-Project is still in progress. I am trying to only use PHP (and HTML & CSS) for this form, to keep it simple. 
+# Login-registration-form 
+Made with vanilla HTML, CSS and PHP. Simple login and registration form that checks for unique username and email. Password are not hashed and will be stored in plain text, so change that if you use this! Change SQL query's if you arent going to use the SQL script that is in this repo. 
