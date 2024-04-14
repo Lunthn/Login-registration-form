@@ -5,13 +5,11 @@
     --action-color: #6246ea;
     --text-color: #2b2c34;
 }
-
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body{
     background-color: var(--background-color);
     color: var(--text-color);
@@ -24,30 +22,45 @@ body{
     justify-content: center;
     align-items: center;
 }
-form{
-    display: flex;
-    flex-direction: column;
-}
 .form-container{
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     padding: 30px;
     border-radius: 5px;
 }
-
-input{
+form{
+    display: flex;
+    flex-direction: column;
+}
+label {
+    font-weight: bold;
+}
+label a{
+    color: var(--text-color);
+}
+em{
+    color: red;
+    font-weight: bold;
+    font-size: small;
+}
+input[type=text], input[type=submit], input[type=password]{
     font-family: "Montserrat", sans-serif;
     border-radius: 5px;
     padding: 5px 10px;
     border: 1px solid black;
     font-weight: 500;
+    margin-bottom: 5px;
 }
 input:focus{
     outline: none;
 }
-
-#switch-page{
-    margin-top: 5px;
-    font-weight: 500;
+.terms-of-service{
+    display: flex;
+    align-items: center;
+}
+#checkbox-input{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
 }
 #submit-button{
     border: none;
@@ -62,7 +75,15 @@ input:focus{
 #submit-button:hover{
     opacity: 0.8;
 }
-label{
-    margin-block: 5px;
-    font-weight: bold;
+#switch-page{
+    margin-top: 5px;
+    font-weight: 500;
+}
+#switch-page a{
+    text-decoration: none;
+}
+.success-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

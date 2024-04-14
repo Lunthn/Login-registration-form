@@ -22,31 +22,33 @@ function connectToDatabase() //connecting to database
     }
     return $connection;
 }
-
-//doesnt work
-function checkEmailAvailability($email, $database) //checking if email is unique
+function checkEmailAvailability($email, $database)
 {
-    $sql = $database->prepare("SELECT * FROM users WHERE email = ?");
-    $sql->bind_param("s", $email);
-    $result = $sql->execute();
-    $result = $result->fetch_assoc();
-    if (!empty($result)) {
+    $query = "SELECT * FROM users WHERE email = ?";
+    $stmt = mysqli_prepare($database, $query);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    $stmt->execute();
+    $result = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    if (! empty($result)){
         return false;
-    } else {
+    }
+    else{
         return true;
     }
 }
-
-//doesnt work
 function checkUsernameAvailability($username, $database) // checking if username is unique
 {
-    $sql = $database->prepare("SELECT * FROM users WHERE username = ?");
-    $sql->bind_param("s", $username);
-    $result = $sql->execute();
-    $result = $result->fetch_assoc();
-    if (!empty($result)) {
+    $query = "SELECT * FROM users WHERE username = ?";
+    $stmt = mysqli_prepare($database, $query);
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    $stmt->execute();
+    $result = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    if (! empty($result)){
         return false;
-    } else {
+    }
+    else{
         return true;
     }
 }
