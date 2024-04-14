@@ -22,10 +22,10 @@ body{
     justify-content: center;
     align-items: center;
 }
-.form-container{
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+.form-container, .main{
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
     padding: 30px;
-    border-radius: 5px;
+    border-radius: 20px;
 }
 form{
     display: flex;
@@ -82,7 +82,7 @@ input:focus{
 #switch-page a{
     text-decoration: none;
 }
-.success-container{
+.success-container, .main{
     display: flex;
     flex-direction: column;
     align-items: center;

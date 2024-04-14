@@ -24,10 +24,10 @@ $database = connectToDatabase();
                 if (empty($username)) {
                     print("<em>Username is required</em>");
                 } else {
-                    if (strlen($username) >= 24 || strlen($username < 2)){
+                    if (strlen($username) >= 24 || strlen($username < 2)){ //cant be larger than 24 because of database (can be changed in database)
                         print("<em>Must be between 2 and 24 characters </em>");
                     } else {
-                        if (checkUsernameAvailability($username, $database)) {
+                        if (checkUsernameAvailability($username, $database)){ //username must be unique
                             $finalUsername = $username;
                         } else {
                             print("<em>Username is already taken</em>");
@@ -46,8 +46,8 @@ $database = connectToDatabase();
                 if (empty($email)) {
                     print("<em>Email is required</em>");
                 } else
-                    if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($email) <= 50) {
-                        if (checkEmailAvailability($email, connectToDatabase())) {
+                    if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($email) <= 50) { //checking if email is in email format
+                        if (checkEmailAvailability($email, $database)) { //email must be unique
                             $finalEmail = $email;
                         } else {
                             print("<em>This e-mail already has an account </em>");
@@ -68,7 +68,7 @@ $database = connectToDatabase();
                 if (empty($password)) {
                     print("<em>Password is required</em>");
                 } else {
-                    if (strlen($password) < 8 || strlen($password) > 50){
+                    if (strlen($password) < 8 || strlen($password) > 50){ //cant be larger than 50 because of database (can be changed in database)
                         print("<em>Must be between 8 and 50 characters</em>");
                     }
                     else {
@@ -117,13 +117,11 @@ $database = connectToDatabase();
 
         <?php
         if(isset($finalUsername) && isset($finalEmail) && isset($finalPassword) && $match && $checked){
-            $hashed_password = password_hash($finalPassword, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (username, email, hashed_password) VALUES(?, ?, ?)";
+            $sql = "INSERT INTO users (username, email, password) VALUES(?, ?, ?)";
             $stmt = mysqli_prepare($database, $sql);
-            mysqli_stmt_bind_param($stmt, "sss", $finalUsername, $finalEmail, $hashed_password);
+            mysqli_stmt_bind_param($stmt, "sss", $finalUsername, $finalEmail, $finalPassword);
             $stmt->execute();
-
-            header("Location: register-success.php");
+            header("Location: register-success.php"); //send to confirmation page
         }
         ?>
 

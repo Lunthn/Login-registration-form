@@ -1,11 +1,12 @@
 <?php
+session_start();
+
 function connectToDatabase() //connecting to database
 {
     $hostname = "localhost"; //change these to connect to your own database
     $username = "root";
     $password = "";
     $database = "login/register";
-
 
     $connection = null;
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
@@ -17,12 +18,12 @@ function connectToDatabase() //connecting to database
         $databaseAvailable = false;
     }
     if (!$databaseAvailable) {
-        ?><h2>Error: database not found</h2><?php
+        ?><h2>Database not found</h2><?php
         die();
     }
     return $connection;
 }
-function checkEmailAvailability($email, $database)
+function checkEmailAvailability($email, $database) //checking if email is unique
 {
     $query = "SELECT * FROM users WHERE email = ?";
     $stmt = mysqli_prepare($database, $query);
@@ -52,12 +53,11 @@ function checkUsernameAvailability($username, $database) // checking if username
         return true;
     }
 }
-function getUser($email, $database) //get info of the user with unique email
+function getUserByID($id, $database) //get info of the user with unique id
 {
-    $sql = $database->prepare("SELECT * FROM users WHERE email = ?");
-    $sql->bind_param("s", $email);
-    $result = $sql->execute();
-    return $result->fetch_assoc();
+    $sql = sprintf("SELECT * FROM users WHERE user_id = $id");
+    $result = $database->query($sql);
+    $userinfo = $result->fetch_assoc();
+    return $userinfo;
 }
-
 ?>
