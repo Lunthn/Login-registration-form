@@ -24,7 +24,7 @@ if (!isset($_SESSION['user_id'])) {
                 print($user['username'] . "</h1>");
                 print("<p> <b>User ID: </b>" . $user['user_id'] . "</p>");
                 print("<p> <b>E-mail: </b>" . $user['email'] . "</p>");
-                print("<p> <b>Password: </b> " . $user['password'] . "</p>");
+                print("<p> <b>Password: </b> " . $user['hashed_password'] . "</p>");
             } catch (mysqli_sql_exception) {
                 print("N/A </h1>");
                 print("<p>Database error</p>");

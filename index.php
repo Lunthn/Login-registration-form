@@ -24,7 +24,7 @@ $database = connectToDatabase();
                 $result = $database->query($sql);
                 $user = $result->fetch_assoc();
                 if (!empty($user)){
-                    if ($_POST['password'] == $user['password']) {
+                    if (password_verify($_POST['password'], $user['hashed_password'])) {
                         $_SESSION['user_id'] = $user['user_id']; //your logged in when user id isset in session
                         header("Location: home.php");
                     }
@@ -37,10 +37,10 @@ $database = connectToDatabase();
             }
             ?>
             <label>E-mail</label>
-            <input type="text" name="email" id="email">
+            <input type="text" name="email" id="email" placeholder="Enter your e-mail">
             <label>Password</label>
-            <input type="password" name="password" id="password" placeholder="Enter username">
-            <input type="submit" value="Submit" id="submit-button" name="submit" placeholder="Enter password">
+            <input type="password" name="password" id="password" placeholder="Enter your password">
+            <input type="submit" value="Submit" id="submit-button" name="submit">
         </form>
         <p id="switch-page">Don't have an account yet? <a href="register.php">Sign up here!</a></p>
     </div>

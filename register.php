@@ -38,7 +38,7 @@ $database = connectToDatabase();
             ?>
 
             <label>Username</label>
-            <input type="text" name="username" id="username" placeholder="Choose username">
+            <input type="text" name="username" id="username" placeholder="Choose an username">
 
             <?php
             if (isset($_POST['submit'])) {
@@ -79,7 +79,7 @@ $database = connectToDatabase();
             ?>
 
             <label>Password</label>
-            <input type="password" name="password" id="password" placeholder="Choose password">
+            <input type="password" name="password" id="password" placeholder="Choose a password">
 
             <?php
             if (isset($_POST['submit'])) {
@@ -94,7 +94,7 @@ $database = connectToDatabase();
             ?>
 
             <label>Repeat password</label>
-            <input type="password" name="password2" id="password" placeholder="Repeat password">
+            <input type="password" name="password2" id="password" placeholder="Repeat previous password">
 
             <?php
             if(isset($_POST['submit'])){
@@ -117,7 +117,8 @@ $database = connectToDatabase();
 
         <?php
         if(isset($finalUsername) && isset($finalEmail) && isset($finalPassword) && $match && $checked){
-            $sql = "INSERT INTO users (username, email, password) VALUES(?, ?, ?)";
+            $finalPassword = password_hash($finalPassword, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO users (username, email, hashed_password) VALUES(?, ?, ?)";
             $stmt = mysqli_prepare($database, $sql);
             mysqli_stmt_bind_param($stmt, "sss", $finalUsername, $finalEmail, $finalPassword);
             $stmt->execute();
