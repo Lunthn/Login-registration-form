@@ -1,6 +1,5 @@
 <?php
 include "database.php";
-$database = connectToDatabase();
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +17,7 @@ $database = connectToDatabase();
         <form method="post">
             <h1>Log-in</h1>
             <?php
+            $database = connectToDatabase();
             if (isset($_POST['submit'])) {
                 $email = $_POST['email'];
                 $sql = sprintf("SELECT * FROM users WHERE email = '%s'", $database->real_escape_string($_POST['email']));

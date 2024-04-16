@@ -1,6 +1,5 @@
 <?php
 include "database.php";
-$database = connectToDatabase();
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +18,7 @@ $database = connectToDatabase();
             <h1>Register</h1>
 
             <?php
+            $database = connectToDatabase();
             if (isset($_POST['submit'])) {
                 $username = $_POST['username'];
                 if (empty($username)) {

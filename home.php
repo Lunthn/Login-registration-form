@@ -1,6 +1,5 @@
 <?php
 include "database.php";
-$database = connectToDatabase();
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php"); //only able to access page when your logged in -> when user id isset
 }
@@ -18,6 +17,9 @@ if (!isset($_SESSION['user_id'])) {
 <body>
 <div class="container">
     <div class="main">
+        <?php
+        $database = connectToDatabase();
+        ?>
         <h1>Hello, <?php
             try {
                 $user = getUserByID($_SESSION['user_id'], $database); //get user info and print it
