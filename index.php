@@ -39,8 +39,8 @@ $database = connectToDatabase();
             <label>E-mail</label>
             <input type="text" name="email" id="email">
             <label>Password</label>
-            <input type="password" name="password" id="password">
-            <input type="submit" value="Submit" id="submit-button" name="submit">
+            <input type="password" name="password" id="password" placeholder="Enter username">
+            <input type="submit" value="Submit" id="submit-button" name="submit" placeholder="Enter password">
         </form>
         <p id="switch-page">Don't have an account yet? <a href="register.php">Sign up here!</a></p>
     </div>

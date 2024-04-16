@@ -38,7 +38,7 @@ $database = connectToDatabase();
             ?>
 
             <label>Username</label>
-            <input type="text" name="username" id="username">
+            <input type="text" name="username" id="username" placeholder="Choose username">
 
             <?php
             if (isset($_POST['submit'])) {
@@ -59,7 +59,7 @@ $database = connectToDatabase();
             ?>
 
             <label>E-mail</label>
-            <input type="text" name="email" id="email">
+            <input type="text" name="email" id="email" placeholder="Enter your e-mail">
 
             <?php
             if (isset($_POST['submit'])) {
@@ -79,7 +79,7 @@ $database = connectToDatabase();
             ?>
 
             <label>Password</label>
-            <input type="password" name="password" id="password">
+            <input type="password" name="password" id="password" placeholder="Choose password">
 
             <?php
             if (isset($_POST['submit'])) {
@@ -94,7 +94,7 @@ $database = connectToDatabase();
             ?>
 
             <label>Repeat password</label>
-            <input type="password" name="password2" id="password">
+            <input type="password" name="password2" id="password" placeholder="Repeat password">
 
             <?php
             if(isset($_POST['submit'])){
