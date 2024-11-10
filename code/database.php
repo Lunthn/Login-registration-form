@@ -1,63 +1,45 @@
 <?php
 session_start();
 
-function connectToDatabase() //connecting to database
-{
-    $hostname = "localhost"; //change these to connect to your own database
-    $username = "root";
-    $password = "";
-    $database = "login/register";
+function connectToDatabase() {
+    $config = [
+        'hostname' => "localhost",
+        'username' => "root",
+        'password' => "",
+        'database' => "login/register",
+        'charset'  => "latin1"
+    ];
 
-    $connection = null;
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
     try {
-        $connection = mysqli_connect($hostname, $username, $password, $database);
-        mysqli_set_charset($connection, 'latin1');
-        $databaseAvailable = true;
+        $conn = mysqli_connect($config['hostname'], $config['username'], $config['password'], $config['database']);
+        mysqli_set_charset($conn, $config['charset']);
+        return $conn;
     } catch (mysqli_sql_exception $e) {
-        $databaseAvailable = false;
-    }
-    if (!$databaseAvailable) {
-        ?><h2>Database not found</h2><?php
+        echo "<h2>Database not found</h2>";
         die();
     }
-    return $connection;
 }
-function checkEmailAvailability($email, $database) //checking if email is unique
-{
-    $query = "SELECT * FROM users WHERE email = ?";
-    $stmt = mysqli_prepare($database, $query);
-    mysqli_stmt_bind_param($stmt, "s", $email);
+
+function checkEmailAvailability($email, $db) {
+    $stmt = $db->prepare("SELECT 1 FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
     $stmt->execute();
-    $result = mysqli_stmt_get_result($stmt);
-    $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    if (! empty($result)){
-        return false;
-    }
-    else{
-        return true;
-    }
+    return !$stmt->get_result()->num_rows;
 }
-function checkUsernameAvailability($username, $database) // checking if username is unique
-{
-    $query = "SELECT * FROM users WHERE username = ?";
-    $stmt = mysqli_prepare($database, $query);
-    mysqli_stmt_bind_param($stmt, "s", $username);
+
+function checkUsernameAvailability($username, $db) {
+    $stmt = $db->prepare("SELECT 1 FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
     $stmt->execute();
-    $result = mysqli_stmt_get_result($stmt);
-    $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    if (! empty($result)){
-        return false;
-    }
-    else{
-        return true;
-    }
+    return !$stmt->get_result()->num_rows;
 }
-function getUserByID($id, $database) //get info of the user with unique id
-{
-    $sql = sprintf("SELECT * FROM users WHERE user_id = $id");
-    $result = $database->query($sql);
-    $userinfo = $result->fetch_assoc();
-    return $userinfo;
+
+function getUserByID($id, $db) {
+    $stmt = $db->prepare("SELECT * FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_assoc();
 }
 ?>

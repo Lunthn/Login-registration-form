@@ -1,7 +1,9 @@
 <?php
 include "database.php";
+
 if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php"); //only able to access page when your logged in -> when user id isset
+    header("Location: index.php");
+    exit;
 }
 ?>
 
@@ -10,7 +12,6 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -18,29 +19,30 @@ if (!isset($_SESSION['user_id'])) {
 <div class="container">
     <div class="main">
         <?php
-        $database = connectToDatabase();
+        $db = connectToDatabase();
+        try {
+            $user = getUserByID($_SESSION['user_id'], $db);
+            echo "<h1>Hello, {$user['username']}</h1>";
+            echo "<p><b>User ID:</b> {$user['user_id']}</p>";
+            echo "<p><b>Email:</b> {$user['email']}</p>";
+            echo "<p><b>Password:</b> {$user['hashed_password']}</p>";
+        } catch (Exception $e) {
+            echo "<h1>Hello, N/A</h1><p>Database error</p>";
+        }
         ?>
-        <h1>Hello, <?php
-            try {
-                $user = getUserByID($_SESSION['user_id'], $database); //get user info and print it
-                print($user['username'] . "</h1>");
-                print("<p> <b>User ID: </b>" . $user['user_id'] . "</p>");
-                print("<p> <b>E-mail: </b>" . $user['email'] . "</p>");
-                print("<p> <b>Password: </b> " . $user['hashed_password'] . "</p>");
-            } catch (mysqli_sql_exception) {
-                print("N/A </h1>");
-                print("<p>Database error</p>");
-            }
-            ?>
-            <form method="post">
-                <input type="submit" value="Log-out" name="log-out" id="submit-button">
-            </form>
-            <?php //logout -> unset user id in session
-            if(isset($_POST['log-out'])){
-                unset($_SESSION['user_id']);
-                echo "<meta http-equiv='refresh' content='0'";
-            }
-            ?>
+
+        <form method="post">
+            <input type="submit" value="Log-out" name="log-out" id="submit-button">
+        </form>
+
+        <?php
+        if (isset($_POST['log-out'])) {
+            session_unset();
+            session_destroy();
+            header("Refresh:0");
+        }
+        ?>
     </div>
 </div>
 </body>
+</html>
